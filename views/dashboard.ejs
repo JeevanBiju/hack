@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop Dashboard</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Shop Dashboard</h1>
+  </header>
+  <main>
+    <h2>Add a Shop</h2>
+    <form action="/add-shop" method="POST">
+      <label for="shopName">Shop Name:</label>
+      <input type="text" id="shopName" name="shopName" required>
+
+      <label for="category">Category:</label>
+      <input type="text" id="category" name="category" placeholder="e.g., Grocery, Electronics" required>
+
+      <label for="location">Location:</label>
+      <input type="text" id="location" name="location" placeholder="e.g., City or Address" required>
+
+      <button type="submit">Add Shop</button>
+    </form>
+
+    <h2>Shops List</h2>
+    <ul>
+      <% shops.forEach(shop => { %>
+        <li><strong><%= shop.name %></strong> - <%= shop.category %> - <%= shop.location %></li>
+      <% }); %>
+    </ul>
+  </main>
+</body>
+</html>
+

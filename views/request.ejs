@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Request Products</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script>
+    async function filterCategories() {
+      const input = document.getElementById("description").value.toLowerCase();
+      const results = document.getElementById("results");
+      results.innerHTML = ""; // Clear previous results
+
+      if (input.trim() === "") return;
+
+      try {
+        const response = await fetch(`/search-shops?category=${encodeURIComponent(input)}`);
+        const data = await response.json();
+
+        if (data.success && data.shops.length > 0) {
+          data.shops.forEach(shop => {
+            const item = document.createElement("li");
+            item.textContent = `${shop.name} - ${shop.location}`;
+            results.appendChild(item);
+          });
+        } else {
+          const noResult = document.createElement("li");
+          noResult.textContent = "No shops found.";
+          results.appendChild(noResult);
+        }
+      } catch (error) {
+        console.error("Error fetching shops:", error);
+        const errorItem = document.createElement("li");
+        errorItem.textContent = "Error fetching shops.";
+        results.appendChild(errorItem);
+      }
+    }
+  </script>
+</head>
+<body>
+  <header>
+    <nav>
+      <h1>ShopLocator</h1>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/dashboard">Shop Dashboard</a></li>
+        <li><a href="/request">Request Product</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <h1>Submit Product Request</h1>
+    <form action="/submit-request" method="POST" enctype="multipart/form-data">
+      <label for="description">Product Description</label>
+      <textarea id="description" name="description" rows="4" required onkeyup="filterCategories()"></textarea>
+
+      <label for="productImage">Product Image (optional)</label>
+      <input type="file" id="productImage" name="productImage">
+
+      <label for="radius">Search Radius (km): <span id="radiusValue">5</span></label>
+      <input type="range" id="radius" name="radius" min="1" max="50" value="5" 
+        oninput="document.getElementById('radiusValue').textContent = this.value">
+
+      <button type="submit">Submit Request</button>
+    </form>
+
+    <h2>Suggested Shops</h2>
+    <ul id="results"></ul>
+  </main>
+</body>
+</html>
