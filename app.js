@@ -3,6 +3,7 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const { initializeApp } = require("firebase/app");
 const { getDatabase, ref, push, get } = require("firebase/database"); // Avoid duplicate imports
+const admin = require("firebase-admin");
 
 const app = express();
 
@@ -27,6 +28,48 @@ app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
 app.set("views", "views")
 app.use(bodyParser.urlencoded({ extended: true }));
+
+
+
+// Initialize Firebase Admin
+admin.initializeApp({
+  credential: admin.credential.applicationDefault(),
+  databaseURL: "https://hackton-3f98f-default-rtdb.firebaseio.com/"
+});
+
+// Middleware to verify Firebase token
+const verifyToken = async (req, res, next) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) {
+    return res.status(401).send("Unauthorized");
+  }
+
+  try {
+    const decodedToken = await admin.auth().verifyIdToken(token);
+    req.user = decodedToken;
+    next();
+  } catch (error) {
+    res.status(401).send("Unauthorized");
+  }
+};
+
+// Protect the POST route
+app.post("/submit-request", verifyToken, async (req, res) => {
+  const { description, radius } = req.body;
+  const userId = req.user.uid;
+
+  try {
+    await admin.database().ref("messages").push({
+      userId,
+      description,
+      radius,
+      timestamp: Date.now()
+    });
+    res.status(200).send("Request submitted successfully.");
+  } catch (error) {
+    res.status(500).send("Error saving request.");
+  }
+});
 
 // API route for fetching shops by category
 app.get("/search-shops", async (req, res) => {

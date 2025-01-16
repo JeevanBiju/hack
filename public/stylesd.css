@@ -1,9 +1,9 @@
-form {
+/* form {
   margin: 20px 0;
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #2f2189;
   border-radius: 5px;
-  background: #f9f9f9;
+  background: #b21111;
 }
 
 form label {
@@ -16,7 +16,7 @@ form input {
   padding: 8px;
   margin-top: 5px;
   margin-bottom: 15px;
-  border: 1px solid #ccc;
+  border: 1px solid #cccccc;
   border-radius: 5px;
 }
 
@@ -40,4 +40,246 @@ ul {
 ul li {
   padding: 10px;
   border-bottom: 1px solid #ddd;
+} */
+
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  background-color: #12192c;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 500px;
+  background-color: #1c223a;
+}
+
+.navbar .logo a {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #00b4d8;
+  text-decoration: none;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.hero {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.hero h1, .hero h2 {
+  color: #00b4d8;
+}
+
+.features, .dashboard-content {
+  padding: 40px;
+}
+
+.form-container {
+  background-color: #1e2a3f;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+button {
+  background-color: #00b4d8;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  font-size: 1.5em;
+  color: #007BFF;
+}
+
+header ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+header ul li a {
+  text-decoration: none;
+  color: #000509;
+  padding: 8px 15px;
+  border-radius: 5px;
+}
+
+header ul li a.active,
+header ul li a:hover {
+  background-color: #007BFF;
+  color: white;
+}
+
+.hero {
+  background-color: #ffffff;
+  text-align: center;
+  padding: 30px 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.hero h2 {
+  font-size: 2em;
+  color: #007BFF;
+  margin: 0;
+}
+
+.hero p {
+  color: #000103;
+}
+
+.dashboard-content {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.form-container,
+.shop-list-container {
+  flex: 1;
+  background: #181c2c;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  min-width: 300px;
+}
+
+h3 {
+  color: #007BFF;
+  margin-bottom: 20px;
+}
+
+form label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #e7e9ec;
+}
+
+form input {
+  width: 100%;
+  padding: 10px .5px;
+  margin-bottom: 15px;
+  border: 1px solid #ced4da;
+  border-radius: 10px;
+}
+
+button {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.shop-list {
+  list-style: none;
+  padding: 0;
+}
+
+.shop-list li {
+  padding: 15px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.shop-list li strong {
+  font-size: 1.1em;
+  color: #edeef0;
+}
+
+.shop-list li p {
+  margin: 5px 0 0;
+  color: #f2f5f8;
+}
+
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: #f4f4f4;
+}
+
+header h1 {
+  margin: 0;
+}
+
+header ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+header ul li {
+  margin-left: 20px;
+}
+
+header ul li a {
+  text-decoration: none;
+  color: #333;
+}
+
+.hero {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.cards {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  text-align: center;
+  width: 30%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.card a {
+  text-decoration: none;
+  color: #007BFF;
+}
+
+.card a:hover {
+  text-decoration: underline;
 }

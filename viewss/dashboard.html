@@ -37,7 +37,6 @@
  -->
 
 
-
  <!DOCTYPE html>
  <html lang="en">
  <head>
@@ -47,47 +46,66 @@
    <link rel="stylesheet" href="/styles.css">
  </head>
  <body>
-   <header>
-     <nav class="navbar">
-       <div class="logo">
-         <a href="/">Gimbrutan's Shopify</a>
-       </div>
-       <ul class="nav-links">
-         <li><a href="/">Home</a></li>
-         <li><a href="/request">Product</a></li>
-         <li><a href="/dashboard">Shop </a></li>
-       </ul>
-     </nav>
-   </header>
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <a href="/">ShopLocator</a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/request">Request Product</a></li>
+        <li><a href="/dashboard">Shop Dashboard</a></li>
+      </ul>
+      <div class="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </nav>
+  </header>
+  
    <main>
      <section class="hero">
        <h2>Shop Dashboard</h2>
        <p>Manage your shop details and view all registered shops in the system.</p>
      </section>
+ 
      <section class="dashboard-content">
+       <!-- Add Shop Section -->
        <div class="form-container">
          <h3>Add a Shop</h3>
          <form action="/add-shop" method="POST">
            <label for="shopName">Shop Name</label>
-           <input type="text" id="shopName" name="shopName" required>
+           <input type="text" id="shopName" name="shopName" required placeholder="Enter shop name">
+ 
            <label for="category">Category</label>
-           <input type="text" id="category" name="category" required>
+           <input type="text" id="category" name="category" placeholder="e.g., Grocery, Electronics" required>
+ 
            <label for="location">Location</label>
-           <input type="text" id="location" name="location" required>
+           <input type="text" id="location" name="location" placeholder="e.g., City or Address" required>
+ 
            <button type="submit">Add Shop</button>
          </form>
        </div>
+ 
+       <!-- Shop List Section -->
        <div class="shop-list-container">
          <h3>Shops List</h3>
          <ul class="shop-list">
-           <% shops.forEach(shop => { %>
-             <li><strong><%= shop.name %></strong> - <%= shop.category %> - <%= shop.location %></li>
-           <% }); %>
+           <% if (shops.length > 0) { %>
+             <% shops.forEach(shop => { %>
+               <li>
+                 <strong><%= shop.name %></strong>
+                 <p><%= shop.category %> - <%= shop.location %></p>
+               </li>
+             <% }); %>
+           <% } else { %>
+             <p>No shops registered yet. Add a shop using the form above.</p>
+           <% } %>
          </ul>
        </div>
      </section>
    </main>
  </body>
  </html>
- 
  

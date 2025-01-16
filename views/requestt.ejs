@@ -1,12 +1,29 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Request Products</title>
   <link rel="stylesheet" href="/stylesd.css">
+  <form id="request-form">
+    <label for="description">Product Description</label>
+    <textarea id="description" name="description" rows="4" required placeholder="Enter product details..."></textarea>
+  
+    <label for="productImage">Product Image (optional)</label>
+    <input type="file" id="productImage" name="productImage">
+  
+    <label for="radius">Search Radius (km): <span id="radiusValue">5</span></label>
+    <input type="range" id="radius" name="radius" min="1" max="10" value="5" 
+      oninput="document.getElementById('radiusValue').textContent = this.value">
+  
+    <button type="submit">Submit Request</button>
+  </form>
+  
+  <p id="message-status"></p>
+  
   <script>
-    async function filterCategories() {
+
+async function filterCategories() {
       const input = document.getElementById("description").value.toLowerCase();
       const results = document.getElementById("results");
       results.innerHTML = ""; // Clear previous results
@@ -35,6 +52,57 @@
         results.appendChild(errorItem);
       }
     }
+    // Firebase initialization (add your Firebase config here)
+    const firebaseConfig = {
+  apiKey: "AIzaSyAbDPwXpL8kJyOX_sMTwg--wnlREFuBmac",
+  authDomain: "hackton-3f98f.firebaseapp.com",
+  databaseURL: "https://hackton-3f98f-default-rtdb.firebaseio.com/", // Added databaseURL
+  projectId: "hackton-3f98f",
+  storageBucket: "hackton-3f98f.appspot.com", // Corrected storage bucket URL
+  messagingSenderId: "124331596760",
+  appId: "1:124331596760:web:5b8b9f86c82953856cb0ad",
+  measurementId: "G-SWQ63C0YHZ"
+};
+
+    firebase.initializeApp(firebaseConfig);
+  
+    const auth = firebase.auth();
+    const db = firebase.database(); // Use getFirestore() for Firestore
+  
+    const form = document.getElementById("request-form");
+    const status = document.getElementById("message-status");
+  
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const description = document.getElementById("description").value;
+      const radius = document.getElementById("radius").value;
+  
+      try {
+        const user = auth.currentUser;
+        if (!user) {
+          status.textContent = "You must be signed in to submit a request.";
+          return;
+        }
+  
+        // Save the request message in Firebase
+        const messageRef = db.ref("messages");
+        await messageRef.push({
+          userId: user.uid,
+          email: user.email,
+          description,
+          radius,
+          timestamp: firebase.database.ServerValue.TIMESTAMP
+        });
+  
+        status.textContent = "Your request has been sent successfully!";
+        form.reset();
+      } catch (error) {
+        console.error("Error submitting request:", error);
+        status.textContent = "An error occurred. Please try again.";
+      }
+    });
+  
+    
   </script>
 <header>
   <nav class="navbar">
